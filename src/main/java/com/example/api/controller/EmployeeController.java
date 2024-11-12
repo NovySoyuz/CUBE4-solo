@@ -81,14 +81,14 @@ public class EmployeeController {
     // Récuperation d'un employé par le nom
     @GetMapping("/search")
     // @RequestParam = extrait le parametre name de la requette HTTP aprés ? dans l'url exemple : /search?name = toto
-    public ResponseEntity<String> getEmployeeByName(@RequestParam String name) {
+    public ResponseEntity<List<Employees>> getEmployeeByName(@RequestParam String name) {
         List<Employees> employees = employeeService.getEmployeesByName(name);
 
         if (employees.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No employee found with the name: " + name);
+            return ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.ok(employees.toString());
+        return ResponseEntity.ok(employees);
     }
 
     @GetMapping("/service/{id}")
