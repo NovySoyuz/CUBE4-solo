@@ -18,8 +18,8 @@ CREATE TABLE IF NOT EXISTS employees (
     firstname VARCHAR(255),
     phone VARCHAR(255),
     mail VARCHAR(255),
-    id_service INT NOT NULL,
-    id_site INT NOT NULL,
+    id_service INT,
+    id_site INT,
     FOREIGN KEY(id_service) REFERENCES services(id_service),
     FOREIGN KEY(id_site) REFERENCES site(id_site)
 );
