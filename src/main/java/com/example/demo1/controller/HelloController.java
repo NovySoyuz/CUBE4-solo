@@ -4,6 +4,7 @@ import com.example.demo1.application.EmployeeService;
 import com.example.demo1.domain.model.Employee;
 import com.example.demo1.infrastructure.EmployeeApiAdapter;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -90,4 +91,8 @@ public class HelloController {
     }
 
 
+    @FXML
+    protected void onSearchBySiteButtonClick() {
+
+    }
 }
