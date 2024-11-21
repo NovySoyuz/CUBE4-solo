@@ -15,14 +15,25 @@ public class EmployeeApiAdapter implements EmployeeRepository {
 
     // Implementation de la methode présente dans EmployeeRepository
     @Override
-    public List<Employee> findBySite(String site) {
-        return null;
+    public List<Employee> findBySite(int site) {
+        List<Employee> employees;
+        try {
+            URL url = new URL(apiURL + "/site/" + site);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            ObjectMapper mapper = new ObjectMapper();
+            employees = mapper.readValue(connection.getInputStream(),
+                    mapper.getTypeFactory().constructCollectionType(List.class, Employee.class));
+        } catch (Exception e) {
+            throw new RuntimeException("Erreur dans la recherche du site", e);
+        }
+        return employees;
     }
 
     @Override
     public List<Employee> findByName(String name) {
         // Stocker les objets employés dans la liste
-        List<Employee> employees = new ArrayList<>();
+        List<Employee> employees;
         try {
             // Exemple d'une requete avec la parametre name
             // Mettre le meme chemin que dans l'API
@@ -41,14 +52,24 @@ public class EmployeeApiAdapter implements EmployeeRepository {
                     // constructCollectionType précise à ObjectMapper qu'il doit traiter la réponse comme une liste d'objet
                     mapper.getTypeFactory().constructCollectionType(List.class, Employee.class));
         } catch (Exception e) {
-            //e.printStackTrace();
-            System.out.println("Le nom n'est pas dans la liste");
+            throw new RuntimeException("Pas de salariés", e);
         }
         return employees;
     }
 
     @Override
-    public List<Employee> findByService(String service) {
-        return null;
+    public List<Employee> findByService(int service) {
+        List<Employee> employees;
+        try {
+            URL url = new URL(apiURL + "/service/" + service);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            ObjectMapper mapper = new ObjectMapper();
+            employees = mapper.readValue(connection.getInputStream(),
+                    mapper.getTypeFactory().constructCollectionType(List.class, Employee.class));
+        } catch (Exception e) {
+            throw new RuntimeException("Pas de service", e);
+        }
+        return employees;
     }
 }

@@ -7,7 +7,7 @@ import java.util.List;
 // Ici cela permet à la couche application d'interagir avec le domaine sans se soucier de la source des données
 
 public interface EmployeeRepository {
-    List<Employee> findBySite (String site);
+    List<Employee> findBySite (int site);
     List<Employee> findByName (String name);
-    List<Employee> findByService (String service);
+    List<Employee> findByService (int service);
 }

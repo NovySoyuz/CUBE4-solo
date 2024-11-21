@@ -22,4 +22,9 @@ public class Site {
     public void setCity(String city) {
         this.city = city;
     }
+    // Redefinission de toString car de base Java utilise toString() pour afficher des objets
+    @Override
+    public String toString() {
+        return city;
+    }
 }

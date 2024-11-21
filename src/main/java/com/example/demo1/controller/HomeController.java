@@ -10,8 +10,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class HomeController {
+
     public void onSearchByName() {
-        System.out.println("test bouton");
         openNewWindow("hello-view.fxml", "Recherche par nom");
     }
 

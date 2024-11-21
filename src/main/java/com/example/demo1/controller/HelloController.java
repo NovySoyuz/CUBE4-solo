@@ -1,11 +1,19 @@
 package com.example.demo1.controller;
 
 import com.example.demo1.application.EmployeeService;
+import com.example.demo1.application.ServicesService;
+import com.example.demo1.application.SiteService;
 import com.example.demo1.domain.model.Employee;
+import com.example.demo1.domain.model.Services;
+import com.example.demo1.domain.model.Site;
 import com.example.demo1.infrastructure.EmployeeApiAdapter;
+import com.example.demo1.infrastructure.ServicesApiAdapter;
+import com.example.demo1.infrastructure.SiteApiAdapter;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -14,11 +22,18 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.util.List;
 
 public class HelloController {
+    private final SiteService siteService;
+    private final ServicesService servicesService;
     private final EmployeeService employeeService;
     @FXML
     private TextField nameTextField;
     @FXML
     private TableView<Employee> employeeTableView;
+    // ComboBox est une liste déroulante
+    @FXML
+    private ComboBox<Site> siteComboBox;
+    @FXML
+    private ComboBox<Services> serviceComboBox;
 
     // On récupere les colonnes mentionnées dans le FXML
 
@@ -30,10 +45,18 @@ public class HelloController {
         // EmployeeApiAdapteater sait comment se connecter à l'API et récuprer les données
         // EmployeeService utilise cette instance pour accéder aux données sans se soucier de la connexion
         this.employeeService = new EmployeeService(new EmployeeApiAdapter());
+        this.siteService = new SiteService(new SiteApiAdapter());
+        this.servicesService = new ServicesService(new ServicesApiAdapter());
     }
 
     @FXML
     protected void initialize() {
+        List<Site> sites = siteService.getAllSite();
+        // On vient afficher dans la liste déroulante le résultat de getAll
+        siteComboBox.setItems(FXCollections.observableList(sites));
+        List<Services> services = servicesService.getAllServices();
+        serviceComboBox.setItems(FXCollections.observableList(services));
+
         // redimension du tableau pour prendre l'ensemble de la largeur
         employeeTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
         // Affectation d'une nouvelle colonne avec le nom "nom"
@@ -55,8 +78,8 @@ public class HelloController {
         // expression lambda utile quand il faut traverser plusieurs objets pour accéder à une donnée
         // Ici service est un objet présent dans Employee ou l'ont souhaite acceder au nom
         // Avec une expression Lambda il faut utiliser SimpleStringProperty
-        TableColumn<Employee, String> serviceColumn = new TableColumn<>("Site");
-        serviceColumn.setCellValueFactory(toto -> new SimpleStringProperty(toto.getValue().getServices().getName()));
+        TableColumn<Employee, String> serviceColumn = new TableColumn<>("Service");
+        serviceColumn.setCellValueFactory(cellValue -> new SimpleStringProperty(cellValue.getValue().getServices().getName()));
 
         TableColumn<Employee, String> siteColumn = new TableColumn<>("Site");
         siteColumn.setCellValueFactory(cellValue -> new SimpleStringProperty(cellValue.getValue().getSite().getCity()));
@@ -66,33 +89,38 @@ public class HelloController {
 
     @FXML
     protected void onSearchByNameButtonClick() {
+        // On récupere la valeur dans le champs de texte
         String name = nameTextField.getText();
-        System.out.println();
 
         if (name != null) {
             List<Employee> employees = employeeService.searchByName(name);
-
-            for (Employee e : employees) {
-                System.out.println("ID " + e.getId_employee());
-                System.out.println("name " + e.getName());
-                System.out.println("mail " + e.getMail());
-                System.out.println("Prenom " + e.getFirstname());
-                System.out.println("Service " + e.getServices().getName());
-                System.out.println("Site " + e.getSite().getCity());
-            }
-
-
             employeeTableView.getItems().setAll(employees);
         } else {
             System.out.println("vide");
         }
-
-
     }
 
+    public void onSearchBySiteButtonClick() {
+        // On récupere la valeur dans
+        Site selectedSite = siteComboBox.getValue();
+        if (selectedSite != null) {
+            List<Employee> employees = employeeService.searchBySite(selectedSite.getId());
+            employeeTableView.getItems().setAll(employees);
+            System.out.println("Nom du site : " + selectedSite.getCity());
+            System.out.println("ID du site : " + selectedSite.getId());
+        } else {
+            System.out.println("Aucun site sélectionné.");
+        }
+    }
 
     @FXML
-    protected void onSearchBySiteButtonClick() {
-
+    protected void onSearchByServiceButtonClick() {
+        Services selectedServices = serviceComboBox.getValue();
+        if (selectedServices != null) {
+            List<Employee> employees = employeeService.searchByService(selectedServices.getId());
+            employeeTableView.getItems().setAll(employees);
+        } else {
+            System.out.println("Aucun service");
+        }
     }
 }

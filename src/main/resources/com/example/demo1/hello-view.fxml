@@ -24,13 +24,12 @@
         <Button text="Rechercher par Site" onAction="#onSearchBySiteButtonClick"/>
     </HBox>
 
-    <!-- Liste déroulante pour le choix du service avec bouton dédié
+    <!-- Liste déroulante pour le choix du service avec bouton dédié -->
     <HBox spacing="10" alignment="CENTER">
         <Label text="Service :"/>
         <ComboBox fx:id="serviceComboBox" promptText="Sélectionner un service"/>
         <Button text="Rechercher par Service" onAction="#onSearchByServiceButtonClick"/>
     </HBox>
-    -->
 
     <!-- Tableau pour afficher les résultats des employés -->
     <TableView fx:id="employeeTableView" prefHeight="300" prefWidth="400">

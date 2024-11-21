@@ -19,11 +19,11 @@ public class EmployeeService {
     }
 
 
-    public List<Employee> searchBySite(String site) {
+    public List<Employee> searchBySite(int site) {
         return employeeRepository.findBySite(site);
     }
 
-    public List<Employee> searchByService(String service) {
+    public List<Employee> searchByService(int service) {
         return employeeRepository.findByService(service);
     }
 
