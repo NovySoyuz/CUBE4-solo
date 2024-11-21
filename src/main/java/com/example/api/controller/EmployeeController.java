@@ -90,7 +90,7 @@ public class EmployeeController {
 
         return ResponseEntity.ok(employees);
     }
-
+    // Obtenir les employés par le service
     @GetMapping("/service/{id}")
     public ResponseEntity<List<Employees>> getEmployeeByService(@PathVariable Integer id) {
         List<Employees> employees = employeeService.getEmployeesByServices(id);
@@ -101,7 +101,15 @@ public class EmployeeController {
         }
     }
 
-
+    @GetMapping("/site/{id}")
+    public ResponseEntity<List<Employees>> getEmployeesBySite(@PathVariable Integer id) {
+        List<Employees> employees = employeeService.getEmployeesBySite(id);
+        if (employees.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(employees);
+        }
+    }
     // Suppression d'un employé
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteEmployee(@PathVariable Integer id) {

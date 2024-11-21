@@ -81,6 +81,10 @@ public class EmployeeService {
         return employeesRepository.findByServices_id(id);
     }
 
+    public List<Employees> getEmployeesBySite(Integer id) {
+        return employeesRepository.findBySite_id(id);
+    }
+
     // Supprimer un employé par son ID
     public void deleteEmployee(Integer id) {
         employeesRepository.deleteById(id);
