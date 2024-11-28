@@ -1,6 +1,8 @@
 package com.example.demo1.application;
 
 import com.example.demo1.domain.model.Employee;
+import com.example.demo1.domain.model.Services;
+import com.example.demo1.domain.model.Site;
 import com.example.demo1.domain.ports.EmployeeRepository;
 
 import java.util.List;
@@ -29,5 +31,9 @@ public class EmployeeService {
 
     public List<Employee> searchByName(String name) {
         return employeeRepository.findByName(name);
+    }
+
+    public Employee createEmployee(Employee employee) {
+        return employeeRepository.createEmployee(employee);
     }
 }

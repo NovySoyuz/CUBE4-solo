@@ -1,9 +1,12 @@
 package com.example.demo1.infrastructure;
 
 import com.example.demo1.domain.model.Employee;
+import com.example.demo1.domain.model.Services;
+import com.example.demo1.domain.model.Site;
 import com.example.demo1.domain.ports.EmployeeRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -72,4 +75,31 @@ public class EmployeeApiAdapter implements EmployeeRepository {
         }
         return employees;
     }
+
+    @Override
+    public Employee createEmployee(Employee employee) {
+        try {
+            URL url = new URL(apiURL);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Type", "application/json");
+            connection.setDoOutput(true);
+
+            ObjectMapper mapper = new ObjectMapper();
+            String jsonEmployee = mapper.writeValueAsString(employee);
+            try (OutputStream os = connection.getOutputStream()) {
+                os.write(jsonEmployee.getBytes());
+                os.flush();
+            }
+            if (connection.getResponseCode() == 200) {
+                // Désérialisation de la réponse en Employee
+                return mapper.readValue(connection.getInputStream(), Employee.class);
+            } else {
+                throw new RuntimeException("Erreur lors de la création de l'employé : " + connection.getResponseMessage());
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Echec de la création de l'employé", e);
+        }
+    }
+
 }

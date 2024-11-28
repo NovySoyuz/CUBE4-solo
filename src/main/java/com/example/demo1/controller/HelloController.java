@@ -41,7 +41,7 @@ public class HelloController {
     // Constructeur obligatoire
     public HelloController() {
         // L'instance de EmployeeService demande obligatoirement un constructeur
-        // creation d'une instance de EmployeeService en utilisant EmployeeApiAdaptater comme sour ce dedonnées
+        // creation d'une instance de EmployeeService en utilisant EmployeeApiAdaptater comme source de données
         // EmployeeApiAdapteater sait comment se connecter à l'API et récuprer les données
         // EmployeeService utilise cette instance pour accéder aux données sans se soucier de la connexion
         this.employeeService = new EmployeeService(new EmployeeApiAdapter());
@@ -106,8 +106,7 @@ public class HelloController {
         if (selectedSite != null) {
             List<Employee> employees = employeeService.searchBySite(selectedSite.getId());
             employeeTableView.getItems().setAll(employees);
-            System.out.println("Nom du site : " + selectedSite.getCity());
-            System.out.println("ID du site : " + selectedSite.getId());
+            System.out.println(selectedSite.getCity());
         } else {
             System.out.println("Aucun site sélectionné.");
         }

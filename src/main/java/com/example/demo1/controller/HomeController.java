@@ -66,7 +66,7 @@ public class HomeController {
     }
 
     private void openAdminPage() {
-        openNewWindow("admin-view.fxml", "Page administrateur");
+        openNewWindow("admin/admin-view.fxml", "Page administrateur");
     }
 
 

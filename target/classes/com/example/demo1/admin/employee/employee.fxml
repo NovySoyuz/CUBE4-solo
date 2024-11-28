@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.demo1.controller.admin.employee.EmployeeController"
+      alignment="CENTER" spacing="20"
+      prefHeight="400.0" prefWidth="600.0">
+
+    <Button onAction="#createEmployee" text="Création d'un employé"/>
+    <Button onAction="#updateEmployee" text="Mise à jour d'un employé"/>
+    <Button onAction="#deleteEmployee" text="Suppression d'un employé"/>
+
+</VBox>
