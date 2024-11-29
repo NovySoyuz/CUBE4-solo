@@ -82,20 +82,27 @@ public class EmployeeApiAdapter implements EmployeeRepository {
             URL url = new URL(apiURL);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
+            // Les données envoyées sont au format JSON
             connection.setRequestProperty("Content-Type", "application/json");
+            // Permet d'envoyer des requetes dans le corps de la requete
             connection.setDoOutput(true);
 
             ObjectMapper mapper = new ObjectMapper();
+            // Convertit l'objet Employee en JSON
             String jsonEmployee = mapper.writeValueAsString(employee);
+            // Ouvre un flux de sortie pour écrire
             try (OutputStream os = connection.getOutputStream()) {
+                // Convertit le JSON en tableau d'octets et l'écrit dans le flux
                 os.write(jsonEmployee.getBytes());
+                // Vide le flux pour s'assurer que les données sont envoyées
                 os.flush();
             }
             if (connection.getResponseCode() == 200) {
-                // Désérialisation de la réponse en Employee
+                // Désérialisation de la réponse JSON en un objet Employee
                 return mapper.readValue(connection.getInputStream(), Employee.class);
             } else {
                 throw new RuntimeException("Erreur lors de la création de l'employé : " + connection.getResponseMessage());
+
             }
         } catch (Exception e) {
             throw new RuntimeException("Echec de la création de l'employé", e);

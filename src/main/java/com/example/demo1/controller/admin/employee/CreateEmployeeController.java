@@ -50,6 +50,13 @@ public class CreateEmployeeController {
     }
 
     public void handleCreateButton() {
+        if (nameField.getText().isEmpty() || emailField.getText().isEmpty() || firstNameField.getText().isEmpty() || phoneField.getText().isEmpty() || servicesComboBox.getItems() == null || siteComboBox.getItems() == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setContentText("Tous les champs sont obligatoires");
+            alert.showAndWait();
+            return;
+        }
         Employee employee = new Employee();
         employee.setName(nameField.getText());
         employee.setMail(emailField.getText());
@@ -62,7 +69,6 @@ public class CreateEmployeeController {
         // Création d'un message
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Succès");
-        alert.setHeaderText(null);
         alert.setContentText("L'employé a été créé avec succès !");
         alert.showAndWait();
     }

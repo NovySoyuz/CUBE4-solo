@@ -1,8 +1,9 @@
-package com.example.demo1.controller;
+package com.example.demo1.controller.admin.employee;
 
 import com.example.demo1.application.EmployeeService;
 import com.example.demo1.application.ServicesService;
 import com.example.demo1.application.SiteService;
+import com.example.demo1.controller.HelloController;
 import com.example.demo1.domain.model.Employee;
 import com.example.demo1.domain.model.Services;
 import com.example.demo1.domain.model.Site;
@@ -11,21 +12,16 @@ import com.example.demo1.infrastructure.ServicesApiAdapter;
 import com.example.demo1.infrastructure.SiteApiAdapter;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.VBox;
 
-import java.io.IOException;
 import java.util.List;
 
-public class HelloController {
+public class DeleteEmployeeController {
     private final SiteService siteService;
     private final ServicesService servicesService;
     private final EmployeeService employeeService;
@@ -42,7 +38,7 @@ public class HelloController {
     // On récupere les colonnes mentionnées dans le FXML
 
     // Constructeur obligatoire
-    public HelloController() {
+    public DeleteEmployeeController() {
         // L'instance de EmployeeService demande obligatoirement un constructeur
         // creation d'une instance de EmployeeService en utilisant EmployeeApiAdaptater comme source de données
         // EmployeeApiAdapteater sait comment se connecter à l'API et récuprer les données
@@ -87,7 +83,10 @@ public class HelloController {
         TableColumn<Employee, String> siteColumn = new TableColumn<>("Site");
         siteColumn.setCellValueFactory(cellValue -> new SimpleStringProperty(cellValue.getValue().getSite().getCity()));
 
-        employeeTableView.getColumns().addAll(nameColumn, firstNameColumn, phoneColumn, mailColumn, serviceColumn, siteColumn);
+        TableColumn<Employee, String> idColumn = new TableColumn<>("Id");
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("id_employee"));
+
+        employeeTableView.getColumns().addAll(nameColumn, firstNameColumn, phoneColumn, mailColumn, serviceColumn, siteColumn, idColumn);
     }
 
     @FXML
@@ -125,4 +124,5 @@ public class HelloController {
             System.out.println("Aucun service");
         }
     }
+
 }

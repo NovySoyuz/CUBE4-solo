@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
 <VBox xmlns:fx="http://javafx.com/fxml" alignment="CENTER" spacing="20.0"
-        fx:controller="com.example.demo1.controller.HelloController">
+      fx:controller="com.example.demo1.controller.admin.employee.DeleteEmployeeController">
     <!-- Titre de la recherche -->
-    <Label text="Recherche d'Employés" style="-fx-font-size: 20px;"/>
+    <Label text="Employés" style="-fx-font-size: 20px;"/>
 
     <!-- Zone de recherche par nom avec bouton dédié -->
     <HBox spacing="10" alignment="CENTER">
@@ -39,4 +42,5 @@
     <padding>
         <Insets top="20" bottom="20" left="20" right="20"/>
     </padding>
+
 </VBox>
