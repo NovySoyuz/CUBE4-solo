@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" prefHeight="500.0" prefWidth="600.0" spacing="20" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.application.controller.admin.employee.CreateEmployeeController">
+
+    <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Créer un Nouvel Employé" />
+
+    <VBox spacing="10" alignment="CENTER">
+        <VBox spacing="5" alignment="CENTER_LEFT" maxWidth="150">
+            <Label text="Nom :" />
+            <TextField fx:id="nameField" maxWidth="150"/>
+        </VBox>
+        <VBox spacing="5" alignment="CENTER_LEFT" maxWidth="150">
+            <Label text="Prénom :" />
+            <TextField fx:id="firstNameField" maxWidth="150"/>
+        </VBox>
+        <VBox spacing="5" alignment="CENTER_LEFT" maxWidth="150">
+            <Label text="Email :" />
+            <TextField fx:id="emailField" maxWidth="150"/>
+        </VBox>
+        <VBox spacing="5" alignment="CENTER_LEFT" maxWidth="150">
+            <Label text="Téléphone :" />
+            <TextField fx:id="phoneField" maxWidth="150"/>
+        </VBox>
+        <VBox spacing="5" alignment="CENTER_LEFT" maxWidth="150">
+            <Label text="Site :" />
+            <ComboBox fx:id="siteComboBox" maxWidth="150"/>
+        </VBox>
+        <VBox spacing="5" alignment="CENTER_LEFT" maxWidth="150">
+            <Label text="Services :" />
+            <ComboBox fx:id="servicesComboBox" maxWidth="150"/>
+        </VBox>
+    </VBox>
+
+    <HBox spacing="10" alignment="CENTER">
+        <Button text="Créer" onAction="#handleCreateButton"/>
+        <Button text="Annuler" onAction="#handleCancelButton"/>
+    </HBox>
+
+</VBox>
