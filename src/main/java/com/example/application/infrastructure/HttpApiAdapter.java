@@ -19,13 +19,13 @@ public class HttpApiAdapter {
     // Cette methode peut utiliser differents types d'objets
     // T = type d'objet à envoyer dans le corps de la requete
     // R = type de reponse qu'on veut recevoir
-    public <T, R> R sendPostRequest(String apiURL, T requestbody, Class<R> responseClass) {
+    public <T, R> R sendDataRequest(String apiURL, String requestMethod, T requestbody, Class<R> responseClass) {
         try {
             // Chemin API
             URL url = new URL(apiURL);
             // Ouverture de la connexion
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("POST");
+            connection.setRequestMethod(requestMethod);
             // Parametrage de l'envoie de la requete
             connection.setRequestProperty("Content-Type", "application/json");
             // Autoriser la sortie des informations (de base est en false)
@@ -80,5 +80,16 @@ public class HttpApiAdapter {
             throw new RuntimeException("Erreur lors de la récupération des données" +e.getMessage(), e);
         }
         return resultList;
+    }
+
+    public boolean deleteEmployeeById(String apiURL) {
+        try {
+            URL url = new URL(apiURL);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("DELETE");
+            return conn.getResponseCode() == 200;
+        } catch (Exception e) {
+            throw new RuntimeException("Erreur lors de la suppression des données" +e.getMessage(), e);
+        }
     }
 }

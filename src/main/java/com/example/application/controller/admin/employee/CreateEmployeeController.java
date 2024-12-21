@@ -3,6 +3,7 @@ package com.example.application.controller.admin.employee;
 import com.example.application.application.EmployeeService;
 import com.example.application.application.ServicesService;
 import com.example.application.application.SiteService;
+import com.example.application.controller.BaseController;
 import com.example.application.domain.model.Employee;
 import com.example.application.domain.model.Services;
 import com.example.application.domain.model.Site;
@@ -51,28 +52,19 @@ public class CreateEmployeeController {
 
     public void handleCreateButton() {
         if (nameField.getText().isEmpty() || emailField.getText().isEmpty() || firstNameField.getText().isEmpty() || phoneField.getText().isEmpty() || servicesComboBox.getItems() == null || siteComboBox.getItems() == null) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erreur");
-            alert.setContentText("Tous les champs sont obligatoires");
-            alert.showAndWait();
-            return;
+            BaseController.errorMessage("Erreur", "Tous les champs sont obligatoires");
+        } else {
+            Employee employee = new Employee();
+            employee.setName(nameField.getText());
+            employee.setMail(emailField.getText());
+            employee.setFirstname(firstNameField.getText());
+            employee.setPhone(phoneField.getText());
+            employee.setServices(servicesComboBox.getValue());
+            employee.setSite(siteComboBox.getValue());
+
+            employeeService.createEmployee(employee);
+            // Création d'un message
+            BaseController.successMessage("Succès", "L'employé a été créé avec succès !");
         }
-        Employee employee = new Employee();
-        employee.setName(nameField.getText());
-        employee.setMail(emailField.getText());
-        employee.setFirstname(firstNameField.getText());
-        employee.setPhone(phoneField.getText());
-        employee.setServices(servicesComboBox.getValue());
-        employee.setSite(siteComboBox.getValue());
-
-        employeeService.createEmployee(employee);
-        // Création d'un message
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Succès");
-        alert.setContentText("L'employé a été créé avec succès !");
-        alert.showAndWait();
-    }
-
-    public void handleCancelButton(ActionEvent actionEvent) {
     }
 }

@@ -31,12 +31,23 @@ public class EmployeeApiAdapter implements EmployeeRepository {
 
     @Override
     public Employee createEmployee(Employee employee) {
-        return httpApiAdapter.sendPostRequest(apiURL, employee, Employee.class);
+        return httpApiAdapter.sendDataRequest(apiURL, "POST", employee, Employee.class);
     }
 
     @Override
     public List<Employee> getAllEmployees() {
         return httpApiAdapter.sendGetAllRequest(apiURL, Employee.class);
     }
+
+    @Override
+    public boolean deleteEmployee(int id) {
+        return httpApiAdapter.deleteEmployeeById(apiURL+"/"+id);
+    }
+
+    @Override
+    public Employee updateEmployee(Employee employee) {
+        return httpApiAdapter.sendDataRequest(apiURL+"/"+ employee.getId_employee(), "PUT", employee, Employee.class);
+    }
+
 
 }

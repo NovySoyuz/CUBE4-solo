@@ -36,4 +36,8 @@ public class EmployeeService {
     public List<Employee> getAllEmployees() {
         return employeeRepository.getAllEmployees();
     }
+    public boolean deleteEmployee(int id) {
+        return employeeRepository.deleteEmployee(id);
+    }
+    public Employee updateEmployee(Employee employee) {return employeeRepository.updateEmployee(employee);}
 }

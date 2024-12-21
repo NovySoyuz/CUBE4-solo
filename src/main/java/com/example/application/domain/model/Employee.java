@@ -17,10 +17,12 @@ public class Employee {
     // Initialisation d'un constructeur sans arguments (constructeur par defaut)
     // Souvent utilisé par les framework de serialisation/désérialisation (Jackson)
     // Permet de creer des instances de classes sans avoir à fournir des valeurs initlaies
-
+/*
     public Employee() {
 
     }
+
+ */
 
     public String getName() {
         return name;
@@ -77,4 +79,5 @@ public class Employee {
     public void setSite(Site site) {
         this.site = site;
     }
+
 }

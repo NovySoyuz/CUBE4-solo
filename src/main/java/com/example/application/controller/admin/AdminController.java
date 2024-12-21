@@ -1,14 +1,13 @@
 package com.example.application.controller.admin;
 
-import com.example.application.controller.PageController;
+import com.example.application.controller.BaseController;
 import javafx.event.ActionEvent;
 
 public class AdminController {
-    PageController pageController = new PageController();
 
 
     public void employee() {
-        pageController.openNewWindow("admin/employee/employee.fxml", "Fiche employé");
+        BaseController.openNewWindow("admin/employee/employee.fxml", "Fiche employé");
     }
 
     public void sites(ActionEvent actionEvent) {

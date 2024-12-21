@@ -15,5 +15,7 @@ public interface EmployeeRepository {
     // La methode prend en argument un objet employé avec les info adequats
     Employee createEmployee(Employee employee);
     List<Employee> getAllEmployees();
+    boolean deleteEmployee (int id);
+    Employee updateEmployee (Employee employee);
 
 }
