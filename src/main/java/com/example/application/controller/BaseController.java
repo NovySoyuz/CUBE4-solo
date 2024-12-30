@@ -1,8 +1,8 @@
 package com.example.application.controller;
 
-import com.example.application.application.EmployeeService;
-import com.example.application.application.ServicesService;
-import com.example.application.application.SiteService;
+import com.example.application.services.EmployeeService;
+import com.example.application.services.ServicesService;
+import com.example.application.services.SiteService;
 import com.example.application.domain.model.Employee;
 import com.example.application.domain.model.Services;
 import com.example.application.domain.model.Site;
@@ -10,7 +10,6 @@ import com.example.application.infrastructure.EmployeeApiAdapter;
 import com.example.application.infrastructure.ServicesApiAdapter;
 import com.example.application.infrastructure.SiteApiAdapter;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,13 +17,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.function.Consumer;
 
 public class BaseController {
     protected final SiteService siteService;
@@ -163,7 +160,7 @@ public class BaseController {
         alert.setContentText(text);
         alert.showAndWait();
     }
-
+/*
     public void updateEmployeeInDatabase(Employee employee) {
         Employee isUpdated = employeeService.updateEmployee(employee);
         if (isUpdated != null) {
@@ -172,6 +169,79 @@ public class BaseController {
         } else {
             Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Erreur lors de la mise à jour !");
             errorAlert.show();
+        }
+    }
+
+ */
+
+    public void updateInDatabase(Object service, String updateMethod, Object entity) {
+        try {
+            // Appel de la methode
+            // entity permet de passer un objet en entrée
+            var method = service.getClass().getMethod(updateMethod, entity.getClass());
+            Object result = method.invoke(service, entity);
+
+            if (result != null) {
+                Alert successAlert = new Alert(Alert.AlertType.INFORMATION, "Modification enregistrée avec succès !");
+                successAlert.show();
+            } else {
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Erreur lors de la mise à jour !");
+                errorAlert.show();
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    /**
+     * Méthode générique pour supprimer un élément sélectionné dans une TableView.
+     *
+     * @param <T>         Le type de l'objet dans la TableView.
+     * @param tableView   La TableView contenant les éléments.
+     * @param successMessage Le message à afficher en cas de succès.
+     * @param errorMessage   Le message à afficher en cas d'erreur.
+     */
+    public static <T> void deleteSelectedItem(TableView<T> tableView, Object service, String getMethod, String deleteMethod, String successMessage, String errorMessage) {
+        // T est un parametre generique representant un type quelconque
+        // TableView<T> signifie que la méthode travaille avec une TableView contenant des objets du type T
+        // Obtenir l'element selectionné dans le tableau
+        T selectedItem = tableView.getSelectionModel().getSelectedItem();
+        if (selectedItem != null) {
+            // Confirmer la suppression
+            Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION,
+                    "Voulez-vous vraiment supprimer cet élément ?", ButtonType.YES, ButtonType.NO);
+            confirmationAlert.showAndWait();
+            if (confirmationAlert.getResult() == ButtonType.YES) {
+                try {
+                    // Récupérer la méthode pour obtenir l'ID
+                    // (int) = valeur retourné par invokk elle est convertie en int
+                    // selectedItem.getClass().getMethod = renvoie la class de l'objet slectedItem, cherche la methode dans le classe de l'objet
+                    // pour récuperer l'id donc le getter
+                    // invoke permet d'appeler dynamiquement la methode getMethod sur l'objet selectedItem
+                    // Le resultat retouré est la valeur de getMethod, donc l'ID
+                    int itemId = (int) selectedItem.getClass().getMethod(getMethod).invoke(selectedItem);
+
+                    // Appeler la méthode de suppression sur le service
+                    // Ici on fait la meme chose que precedemment sauf que nous allons cherche dans le service pour trouver la methode de suppression
+                    boolean isDeleted = (boolean) service.getClass()
+                            .getMethod(deleteMethod, int.class)
+                            .invoke(service, itemId);
+
+                    if (isDeleted) {
+                        // Mettre à jour la TableView
+                        tableView.getItems().remove(selectedItem);
+                        BaseController.successMessage("Succès", successMessage);
+                    } else {
+                        BaseController.errorMessage("Erreur", errorMessage);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    BaseController.errorMessage("Erreur", "Une erreur est survenue lors de la suppression.");
+                }
+            }
+        } else {
+            BaseController.errorMessage("Erreur", "Veuillez sélectionner un élément à supprimer !");
         }
     }
 }

@@ -1,8 +1,8 @@
 package com.example.application.controller.admin.employee;
 
-import com.example.application.application.EmployeeService;
-import com.example.application.application.ServicesService;
-import com.example.application.application.SiteService;
+import com.example.application.services.EmployeeService;
+import com.example.application.services.ServicesService;
+import com.example.application.services.SiteService;
 import com.example.application.controller.BaseController;
 import com.example.application.domain.model.Employee;
 import com.example.application.domain.model.Services;
@@ -11,9 +11,7 @@ import com.example.application.infrastructure.EmployeeApiAdapter;
 import com.example.application.infrastructure.ServicesApiAdapter;
 import com.example.application.infrastructure.SiteApiAdapter;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
@@ -44,6 +42,7 @@ public class CreateEmployeeController {
 
     @FXML
     protected void initialize() {
+        // Récupération des sites et services
         List<Site> sites = siteService.getAllSite();
         siteComboBox.setItems(FXCollections.observableList(sites));
         List<Services> services = servicesService.getAllServices();

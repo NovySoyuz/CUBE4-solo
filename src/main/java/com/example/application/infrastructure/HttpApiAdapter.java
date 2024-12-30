@@ -82,7 +82,7 @@ public class HttpApiAdapter {
         return resultList;
     }
 
-    public boolean deleteEmployeeById(String apiURL) {
+    public boolean deleteMethodById(String apiURL) {
         try {
             URL url = new URL(apiURL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();

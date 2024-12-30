@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<VBox xmlns:fx="http://javafx.com/fxml" alignment="CENTER" spacing="20.0"
+      fx:controller="com.example.application.controller.admin.employee.EditEmployeeController">
+    <!-- Titre de la recherche -->
+    <Label text="Employés" style="-fx-font-size: 20px;"/>
+
+    <!-- Zone de recherche par nom avec bouton dédié -->
+    <HBox spacing="10" alignment="CENTER">
+        <Label text="Nom :"/>
+        <TextField fx:id="nameTextField" promptText="Entrez un nom ou des lettres..."/>
+        <Button text="Rechercher par Nom" onAction="#onSearchByNameButtonClick"/>
+    </HBox>
+
+
+    <!-- Liste déroulante pour le choix du site avec bouton dédié -->
+    <HBox spacing="10" alignment="CENTER">
+        <Label text="Site :"/>
+        <ComboBox fx:id="siteComboBox" promptText="Sélectionner un site"/>
+        <Button text="Rechercher par Site" onAction="#onSearchBySiteButtonClick"/>
+    </HBox>
+
+    <!-- Liste déroulante pour le choix du service avec bouton dédié -->
+    <HBox spacing="10" alignment="CENTER">
+        <Label text="Service :"/>
+        <ComboBox fx:id="serviceComboBox" promptText="Sélectionner un service"/>
+        <Button text="Rechercher par Service" onAction="#onSearchByServiceButtonClick"/>
+    </HBox>
+
+    <!-- Tableau pour afficher les résultats des employés -->
+    <TableView fx:id="employeeTableView" prefHeight="300" prefWidth="400">
+    </TableView>
+    <Button text="Supprimer" onAction="#onDeleteButtonClick" />
+
+
+    <padding>
+        <Insets top="20" bottom="20" left="20" right="20"/>
+    </padding>
+
+</VBox>

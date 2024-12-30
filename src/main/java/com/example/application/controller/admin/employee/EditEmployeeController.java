@@ -1,17 +1,10 @@
 package com.example.application.controller.admin.employee;
 
-import com.example.application.application.EmployeeService;
 import com.example.application.controller.BaseController;
 import com.example.application.domain.model.Employee;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.cell.ComboBoxTableCell;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 
 public class EditEmployeeController extends BaseController {
@@ -24,37 +17,42 @@ public class EditEmployeeController extends BaseController {
     @Override
     protected void initialize() {
         super.initialize();
+        // Mettre à jour les données dans les colonnes
         employeeTableView.setEditable(true);
+        // Permet de double clicker sur la cellule et de l'éditer
         nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        // Gestionnaire d'evenement lors d'une modification est validée
         nameColumn.setOnEditCommit(event -> {
+            // Récuperation de l'objet employé associé à la ligne en cours
             Employee employee = event.getRowValue();
+            // Mettre à jour la propriété de l'employé avec la nouvelle valeure dde la cellule
             employee.setName(event.getNewValue());
             // Mise à jour du service
-            baseController.updateEmployeeInDatabase(employee);
+            baseController.updateInDatabase(employeeService, "updateEmployee", employee);
         });
 
         firstNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         firstNameColumn.setOnEditCommit(event -> {
             Employee employee = event.getRowValue();
-            employee.setName(event.getNewValue());
+            employee.setFirstname(event.getNewValue());
             // Mise à jour du service
-            baseController.updateEmployeeInDatabase(employee);
+            baseController.updateInDatabase(employeeService, "updateEmployee", employee);
         });
 
         phoneColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         phoneColumn.setOnEditCommit(event -> {
             Employee employee = event.getRowValue();
-            employee.setName(event.getNewValue());
+            employee.setPhone(event.getNewValue());
             // Mise à jour du service
-            baseController.updateEmployeeInDatabase(employee);
+            baseController.updateInDatabase(employeeService, "updateEmployee", employee);
         });
 
         mailColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         mailColumn.setOnEditCommit(event -> {
             Employee employee = event.getRowValue();
-            employee.setName(event.getNewValue());
+            employee.setMail(event.getNewValue());
             // Mise à jour du service
-            baseController.updateEmployeeInDatabase(employee);
+            baseController.updateInDatabase(employeeService, "updateEmployee", employee);
         });
 
         serviceColumn.setCellFactory(ComboBoxTableCell.forTableColumn(
@@ -63,7 +61,7 @@ public class EditEmployeeController extends BaseController {
         serviceColumn.setOnEditCommit(event -> {
             Employee employee = event.getRowValue();
             employee.setServices(event.getNewValue());
-            updateEmployeeInDatabase(employee);
+            baseController.updateInDatabase(employeeService, "updateEmployee", employee);
         });
 
         siteColumn.setCellFactory(ComboBoxTableCell.forTableColumn(
@@ -72,32 +70,13 @@ public class EditEmployeeController extends BaseController {
         siteColumn.setOnEditCommit(event -> {
             Employee employee = event.getRowValue();
             employee.setSite(event.getNewValue());
-            updateEmployeeInDatabase(employee);
+            baseController.updateInDatabase(employeeService, "updateEmployee", employee);
         });
 
     }
 
     public void onDeleteButtonClick(ActionEvent actionEvent) {
-        // Récupérer l'élément sélectionné
-        Employee selectedEmployee = employeeTableView.getSelectionModel().getSelectedItem();
-        if (selectedEmployee != null) {
-            // Confirmer la suppression
-            Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION, "Voulez-vous vraiment supprimer cet employé ?", ButtonType.YES, ButtonType.NO);
-            confirmationAlert.showAndWait();
-            if (confirmationAlert.getResult() == ButtonType.YES) {
-                // Appeler le service pour supprimer l'utilisateur
-                boolean isDeleted = employeeService.deleteEmployee(selectedEmployee.getId_employee());
-                if (isDeleted) {
-                    // Mettre à jour la TableView
-                    employeeTableView.getItems().remove(selectedEmployee);
-                    BaseController.successMessage("Succès", "Employé supprimé avec succès !");
+        BaseController.deleteSelectedItem(employeeTableView, employeeService, "getId_employee", "deleteEmployee", "succés", "Erreur");
 
-                } else {
-                    BaseController.errorMessage("Erreur", "Erreur lors de la suppression !");
-                }
-            }
-        } else {
-            BaseController.errorMessage("Erreur", "Veuillez sélectionner un employé à supprimer !");
-        }
     }
 }

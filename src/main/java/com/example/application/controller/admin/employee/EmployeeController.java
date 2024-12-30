@@ -9,6 +9,6 @@ public class EmployeeController {
     }
 
     public void updateEmployee(ActionEvent actionEvent) {
-        BaseController.openNewWindow("admin/employee/EditEmployeeView.fxml", "Ensemble des employés");
+        BaseController.openNewWindow("admin/employee/editEmployeeView.fxml", "Ensemble des employés");
     }
 }

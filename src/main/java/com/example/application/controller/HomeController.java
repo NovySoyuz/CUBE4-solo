@@ -1,26 +1,7 @@
 package com.example.application.controller;
 
-import com.example.application.application.EmployeeService;
-import com.example.application.application.ServicesService;
-import com.example.application.application.SiteService;
-import com.example.application.domain.model.Employee;
-import com.example.application.domain.model.Services;
-import com.example.application.domain.model.Site;
-import com.example.application.infrastructure.EmployeeApiAdapter;
-import com.example.application.infrastructure.ServicesApiAdapter;
-import com.example.application.infrastructure.SiteApiAdapter;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-
-import java.util.List;
 
 public class HomeController extends BaseController{
     private boolean ctrlPressed = false;

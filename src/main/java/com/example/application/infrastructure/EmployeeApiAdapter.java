@@ -41,7 +41,7 @@ public class EmployeeApiAdapter implements EmployeeRepository {
 
     @Override
     public boolean deleteEmployee(int id) {
-        return httpApiAdapter.deleteEmployeeById(apiURL+"/"+id);
+        return httpApiAdapter.deleteMethodById(apiURL+"/"+id);
     }
 
     @Override
