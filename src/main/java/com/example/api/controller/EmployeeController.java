@@ -35,8 +35,8 @@ public class EmployeeController {
                 employees.getMail(),
                 // Il faut aller chercher dans la classe Service en passant par Employees
                 // Car clé étrangére
-                employees.getSite().getId(),
-                employees.getServices().getId()
+                employees.getServices().getId(),
+                employees.getSite().getId()
 
         );
         // renvoie un objet ResponsEntity avec http 200

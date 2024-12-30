@@ -30,8 +30,8 @@ public class EmployeeService {
     public Employees createEmployee(String name, String firstname, String phone, String mail, Integer serviceId, Integer siteId) {
         // Il faut d'abord instancier la classe dans le modéle
         // Récupération du service associé à l'ID. Si identifiant invalide lance une RuntimeException
-        Services service = serviceRepository.findById(serviceId).orElseThrow(() -> new RuntimeException("Service not found"));
         Site site = siteRepository.findById(siteId).orElseThrow(() -> new RuntimeException("Erruer"));
+        Services service = serviceRepository.findById(serviceId).orElseThrow(() -> new RuntimeException("Service not found"));
 
         // Instancie la classe employees
         Employees employees = new Employees();
@@ -39,8 +39,8 @@ public class EmployeeService {
         employees.setFirstname(firstname);
         employees.setPhone(phone);
         employees.setMail(mail);
-        employees.setServices(service);
         employees.setSite(site);
+        employees.setServices(service);
 
         return employeesRepository.save(employees);
     }
