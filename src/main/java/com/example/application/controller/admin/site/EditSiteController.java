@@ -54,15 +54,15 @@ public class EditSiteController {
     }
 
     public void onDeleteButtonClick(ActionEvent actionEvent) {
-        /*
+        // Récuperation de l'id du site
         int selectedId = siteTableView.getSelectionModel().getSelectedItem().getId();
+        // Creation de l'une liste si un employé est detecté avec l'id du site
         List<Employee> employees = employeeService.searchBySite(selectedId);
-        System.out.println(employees);
 
-         */
-
-        BaseController.deleteSelectedItem(siteTableView, siteService, "getId", "deleteSite", "Succés", "Erreur");
-
-
+        if (!employees.isEmpty()) {
+            BaseController.errorMessage("Erreur =", "Le site est encore affecté à des utilisateurs");
+        } else {
+            BaseController.deleteSelectedItem(siteTableView, siteService, "getId", "deleteSite", "Succés", "Erreur");
+        }
     }
 }

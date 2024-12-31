@@ -14,8 +14,8 @@ public class AdminController {
         BaseController.openNewWindow("admin/site/siteView.fxml", "Fiche site");
     }
 
-    public void services(ActionEvent actionEvent) {
-        System.out.println("services");
+    public void services() {
+        BaseController.openNewWindow("admin/service/serviceView.fxml", "Fiche service");
     }
 
 }

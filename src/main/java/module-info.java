@@ -15,4 +15,6 @@ module com.example.demo1 {
     opens com.example.application.controller.admin.employee to javafx.fxml;
     opens com.example.application.controller.admin.site to javafx.fxml;
     exports com.example.application.controller.admin.site;
+    opens com.example.application.controller.admin.service to javafx.fxml;
+    exports com.example.application.controller.admin.service;
 }

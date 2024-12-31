@@ -9,6 +9,6 @@ public class SiteController {
     }
 
     public void updateEmployee(ActionEvent actionEvent) {
-        BaseController.openNewWindow("admin/site/EditSiteView.fxml", "Creation d'un site");
+        BaseController.openNewWindow("admin/site/EditSiteView.fxml", "Mise à jour d'un site");
     }
 }

@@ -6,9 +6,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" prefHeight="500.0" prefWidth="600.0" spacing="20" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.application.controller.admin.site.CreateSiteController">
+<VBox alignment="CENTER" prefHeight="500.0" prefWidth="600.0" spacing="20" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.application.controller.admin.service.CreateServiceController">
 
-    <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Creation d'un site" />
+    <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Créer un Nouvel Employé" />
     <VBox spacing="10" alignment="CENTER">
         <VBox spacing="5" alignment="CENTER_LEFT" maxWidth="150">
             <Label text="Nom :" />
@@ -21,3 +21,4 @@
     </HBox>
 
 </VBox>
+

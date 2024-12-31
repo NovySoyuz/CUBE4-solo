@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.type.CollectionType;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Collections;
 import java.util.List;
 
 public class HttpApiAdapter {
@@ -64,6 +65,11 @@ public class HttpApiAdapter {
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.setRequestProperty("Accept", "application/json");
+
+            // Si la connexion renvoie 404, on retourne une liste vide
+            if (connection.getResponseCode() == 404) {
+                return Collections.emptyList();
+            }
 
             if (connection.getResponseCode() == 200 || connection.getResponseCode() == 201) {
                 // Définit un type générique pour désérialiser la réponse en une liste d'objets de type T
