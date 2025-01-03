@@ -15,4 +15,13 @@ public class ServicesService {
     public List<Services> getAllServices () {
         return servicesRepository.getAllServices();
     }
+    public Services createService(Services service) {
+        return servicesRepository.createService(service);
+    }
+    public Services updateService(Services service) {
+        return servicesRepository.updateService(service);
+    }
+    public boolean deleteService(int id) {
+        return servicesRepository.deleteService(id);
+    }
 }

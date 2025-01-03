@@ -13,7 +13,7 @@
       alignment="CENTER" spacing="20"
       prefHeight="400.0" prefWidth="600.0">
 
-    <TableView fx:id="siteTableView" prefHeight="300" prefWidth="400">
+    <TableView fx:id="serviceTableView" prefHeight="300" prefWidth="400">
     </TableView>
 
     <Button text="Supprimer" onAction="#onDeleteButtonClick" />

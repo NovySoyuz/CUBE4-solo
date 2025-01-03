@@ -60,7 +60,7 @@ public class EditSiteController {
         List<Employee> employees = employeeService.searchBySite(selectedId);
 
         if (!employees.isEmpty()) {
-            BaseController.errorMessage("Erreur =", "Le site est encore affecté à des utilisateurs");
+            BaseController.errorMessage("Erreur ", "Le site est encore affecté à des utilisateurs");
         } else {
             BaseController.deleteSelectedItem(siteTableView, siteService, "getId", "deleteSite", "Succés", "Erreur");
         }

@@ -7,13 +7,13 @@ import java.util.List;
 
 public class SiteApiAdapter implements SiteRepository {
     private final HttpApiAdapter httpApiAdapter;
-    private final String apiURL = "http://localhost:8080/api/site";
+    private final String apiURL = "http://localhost:8080/api/site/";
     public SiteApiAdapter () {
         this.httpApiAdapter = new HttpApiAdapter();
     }
     @Override
     public List<Site> getAllSite() {
-        return httpApiAdapter.sendGetAllRequest(apiURL+"/search", Site.class);
+        return httpApiAdapter.sendGetAllRequest(apiURL+"search", Site.class);
     }
 
     @Override
@@ -23,12 +23,12 @@ public class SiteApiAdapter implements SiteRepository {
 
     @Override
     public Site updateSite(Site site) {
-        return httpApiAdapter.sendDataRequest(apiURL+"/" + site.getId(), "PUT", site, Site.class);
+        return httpApiAdapter.sendDataRequest(apiURL + site.getId(), "PUT", site, Site.class);
     }
 
     @Override
     public boolean deleteSite(int id) {
-        return httpApiAdapter.deleteMethodById(apiURL+"/"+ id);
+        return httpApiAdapter.deleteMethodById(apiURL + id);
     }
 
 }

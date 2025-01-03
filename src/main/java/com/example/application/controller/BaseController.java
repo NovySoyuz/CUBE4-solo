@@ -202,7 +202,7 @@ public class BaseController {
      * @param successMessage Le message à afficher en cas de succès.
      * @param errorMessage   Le message à afficher en cas d'erreur.
      */
-    public static <T> void deleteSelectedItem(TableView<T> tableView, Object service, String getMethod, String deleteMethod, String successMessage, String errorMessage) {
+    public static <T> void deleteSelectedItem(TableView<T> tableView, Object service, String getIdMethod, String deleteMethod, String successMessage, String errorMessage) {
         // T est un parametre generique representant un type quelconque
         // TableView<T> signifie que la méthode travaille avec une TableView contenant des objets du type T
         // Obtenir l'element selectionné dans le tableau
@@ -220,10 +220,11 @@ public class BaseController {
                     // pour récuperer l'id donc le getter
                     // invoke permet d'appeler dynamiquement la methode getMethod sur l'objet selectedItem
                     // Le resultat retouré est la valeur de getMethod, donc l'ID
-                    int itemId = (int) selectedItem.getClass().getMethod(getMethod).invoke(selectedItem);
+                    int itemId = (int) selectedItem.getClass().getMethod(getIdMethod).invoke(selectedItem);
 
                     // Appeler la méthode de suppression sur le service
                     // Ici on fait la meme chose que precedemment sauf que nous allons cherche dans le service pour trouver la methode de suppression
+                    // int.class correpond au type d'argument attendu par la methode ici un int
                     boolean isDeleted = (boolean) service.getClass()
                             .getMethod(deleteMethod, int.class)
                             .invoke(service, itemId);

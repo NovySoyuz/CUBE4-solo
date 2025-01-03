@@ -6,4 +6,7 @@ import java.util.List;
 
 public interface ServicesRepository {
     List<Services> getAllServices();
+    Services createService(Services service);
+    Services updateService(Services service);
+    boolean deleteService(int id);
 }

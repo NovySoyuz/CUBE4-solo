@@ -36,7 +36,7 @@ public class HttpApiAdapter {
             // Convertie l'objet users en CC au format JSON
             String jsonEmployee = mapper.writeValueAsString(requestbody);
             // Decocher la ligne du bas pour débug et voir les données json envoyées
-            //System.out.println(jsonEmployee);
+            System.out.println(jsonEmployee);
             // connection.getoutputStream permet d'envoyer les données
             try (OutputStream os = connection.getOutputStream()) {
                 // Conversion du JSON en bytes (necessaire pour l'envoi)

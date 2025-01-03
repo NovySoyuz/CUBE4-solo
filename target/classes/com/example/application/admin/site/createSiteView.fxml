@@ -8,7 +8,7 @@
 
 <VBox alignment="CENTER" prefHeight="500.0" prefWidth="600.0" spacing="20" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.application.controller.admin.site.CreateSiteController">
 
-    <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Créer un Nouvel Employé" />
+    <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Creation d'un site" />
     <VBox spacing="10" alignment="CENTER">
         <VBox spacing="5" alignment="CENTER_LEFT" maxWidth="150">
             <Label text="Nom :" />

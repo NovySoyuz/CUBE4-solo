@@ -7,7 +7,7 @@ import java.util.List;
 public class EmployeeApiAdapter implements EmployeeRepository {
     // Chemin de l'API
     private final HttpApiAdapter httpApiAdapter;
-    private final String apiURL = "http://localhost:8080/api/employees";
+    private final String apiURL = "http://localhost:8080/api/employees/";
 
     public EmployeeApiAdapter () {
         this.httpApiAdapter = new HttpApiAdapter();
@@ -16,17 +16,17 @@ public class EmployeeApiAdapter implements EmployeeRepository {
     // Implementation de la methode présente dans EmployeeRepository
     @Override
     public List<Employee> findBySite(int site) {
-        return httpApiAdapter.sendGetAllRequest(apiURL + "/site/" + site, Employee.class);
+        return httpApiAdapter.sendGetAllRequest(apiURL + "site/" + site, Employee.class);
     }
 
     @Override
     public List<Employee> findByName(String name) {
-        return httpApiAdapter.sendGetAllRequest(apiURL + "/search?name=" + name, Employee.class);
+        return httpApiAdapter.sendGetAllRequest(apiURL + "search?name=" + name, Employee.class);
     }
 
     @Override
     public List<Employee> findByService(int service) {
-        return httpApiAdapter.sendGetAllRequest(apiURL + "/service/" + service, Employee.class);
+        return httpApiAdapter.sendGetAllRequest(apiURL + "service/" + service, Employee.class);
     }
 
     @Override
@@ -41,12 +41,12 @@ public class EmployeeApiAdapter implements EmployeeRepository {
 
     @Override
     public boolean deleteEmployee(int id) {
-        return httpApiAdapter.deleteMethodById(apiURL+"/"+id);
+        return httpApiAdapter.deleteMethodById(apiURL+id);
     }
 
     @Override
     public Employee updateEmployee(Employee employee) {
-        return httpApiAdapter.sendDataRequest(apiURL+"/"+ employee.getId_employee(), "PUT", employee, Employee.class);
+        return httpApiAdapter.sendDataRequest(apiURL+ employee.getId_employee(), "PUT", employee, Employee.class);
     }
 
 
