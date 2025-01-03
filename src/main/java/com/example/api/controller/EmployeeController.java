@@ -15,7 +15,7 @@ import java.util.Optional;
 // RESTful chaque methode HTPP(GET,POST,DELETE,UPDATE) correspond à une action spécifique
 @RestController
 // Chemin de base de l'API
-@RequestMapping("/api/employees")
+@RequestMapping("/api/employees/")
 public class EmployeeController {
     @Autowired
     // Injecte automatiquement l'instance de EnployeeService dans le controlleur
@@ -44,7 +44,7 @@ public class EmployeeController {
         return ResponseEntity.ok(createdEmployee);
     }
     // @PathVariable extrait la variable de chemin ici id
-    @PutMapping("/{id}")
+    @PutMapping("{id}")
     public ResponseEntity<Employees> updateEmployee (@PathVariable Integer id, @RequestBody Employees employees) {
         Employees update = employeeService.updateEmployee(
                 id,
@@ -68,7 +68,7 @@ public class EmployeeController {
     // Récuperation d'un employé par son id
     // {id} est une variable de chemin capturé par @PathVariable
     // Réponse au requete GET /api/employees/{id}
-    @GetMapping("/{id}")
+    @GetMapping("{id}")
     // @PathVariable extrait la variable id de l'url pour l'utiliser dans la methode
     public ResponseEntity<Employees> getEmployeeById(@PathVariable Integer id) {
         Optional<Employees> employees = employeeService.getEmployeeById(id);
@@ -79,7 +79,7 @@ public class EmployeeController {
     }
 
     // Récuperation d'un employé par le nom
-    @GetMapping("/search")
+    @GetMapping("search")
     // @RequestParam = extrait le parametre name de la requette HTTP aprés ? dans l'url exemple : /search?name = toto
     public ResponseEntity<List<Employees>> getEmployeeByName(@RequestParam String name) {
         List<Employees> employees = employeeService.getEmployeesByName(name);
@@ -91,7 +91,7 @@ public class EmployeeController {
         return ResponseEntity.ok(employees);
     }
     // Obtenir les employés par le service
-    @GetMapping("/service/{id}")
+    @GetMapping("service/{id}")
     public ResponseEntity<List<Employees>> getEmployeeByService(@PathVariable Integer id) {
         List<Employees> employees = employeeService.getEmployeesByServices(id);
         if (employees.isEmpty()) {
@@ -101,7 +101,7 @@ public class EmployeeController {
         }
     }
 
-    @GetMapping("/site/{id}")
+    @GetMapping("site/{id}")
     public ResponseEntity<List<Employees>> getEmployeesBySite(@PathVariable Integer id) {
         List<Employees> employees = employeeService.getEmployeesBySite(id);
         if (employees.isEmpty()) {
@@ -111,7 +111,7 @@ public class EmployeeController {
         }
     }
     // Suppression d'un employé
-    @DeleteMapping("/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<String> deleteEmployee(@PathVariable Integer id) {
         String message = "Success suppress";
 

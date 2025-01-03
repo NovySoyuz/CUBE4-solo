@@ -74,7 +74,7 @@ public class EmployeeService {
 
     // Récuperation des employés par un nom
     public List<Employees> getEmployeesByName(String name) {
-        return employeesRepository.findByNameIgnoreCase(name);
+        return employeesRepository.findByNameContainingIgnoreCase(name);
     }
 
     public List<Employees> getEmployeesByServices(Integer id) {

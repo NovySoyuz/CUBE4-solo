@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/site")
+@RequestMapping("/api/site/")
 public class SiteController {
     @Autowired
     private SiteService siteService;
@@ -21,7 +21,7 @@ public class SiteController {
         return ResponseEntity.ok(createdSite);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("{id}")
     public ResponseEntity<Site> updateSite (@PathVariable int id, @RequestBody Site site) {
         Site siteUpdate = siteService.updateSite(
                 id,
@@ -30,14 +30,14 @@ public class SiteController {
         return ResponseEntity.ok(siteUpdate);
     }
 
-    @GetMapping("/search")
+    @GetMapping("search")
     public ResponseEntity<Iterable<Site>> getAllSite () {
         Iterable site = siteService.getAllSite();
 
         return ResponseEntity.ok(site);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<String> deleteSite (@PathVariable int id) {
         String message = "Suppression success";
         siteService.deleteSite(id);

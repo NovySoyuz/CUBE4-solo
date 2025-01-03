@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/services")
+@RequestMapping("/api/services/")
 public class ServicesController {
     @Autowired
     private ServicesService service;
@@ -24,7 +24,7 @@ public class ServicesController {
         );
         return ResponseEntity.ok(createdService);
     }
-    @PutMapping("/{id}")
+    @PutMapping("{id}")
     public ResponseEntity<Services> updateService (@PathVariable int id, @RequestBody Services services) {
         Services update = service.updateServices(
                 id,
@@ -33,13 +33,13 @@ public class ServicesController {
         return ResponseEntity.ok(update);
     }
 
-    @GetMapping("/search")
+    @GetMapping("search")
     public ResponseEntity<Iterable<Services>> getAllServices () {
         Iterable<Services> servicesList = service.getAllServices();
         return ResponseEntity.ok(servicesList);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<String> deleteService (@PathVariable int id) {
         String name = "Suppress success";
         service.deleteService(id);
