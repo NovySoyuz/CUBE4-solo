@@ -1,12 +1,14 @@
 package com.example.application.controller.admin.site;
 
-import com.example.application.controller.BaseController;
+import com.example.application.controller.HomeController;
 import com.example.application.domain.model.Employee;
 import com.example.application.infrastructure.EmployeeApiAdapter;
 import com.example.application.services.EmployeeService;
 import com.example.application.services.SiteService;
 import com.example.application.domain.model.Site;
 import com.example.application.infrastructure.SiteApiAdapter;
+import com.example.application.utils.MessagesManager;
+import com.example.application.utils.MethodsController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -19,7 +21,7 @@ import java.util.List;
 public class EditSiteController {
     private final SiteService siteService;
     private final EmployeeService employeeService;
-    private final BaseController baseController;
+    private final MethodsController methodsController;
     @FXML
     private TableView<Site> siteTableView;
     private TableColumn<Site, Integer> idColumn;
@@ -28,7 +30,7 @@ public class EditSiteController {
     public EditSiteController() {
         this.siteService = new SiteService(new SiteApiAdapter());
         this.employeeService = new EmployeeService(new EmployeeApiAdapter());
-        this.baseController = new BaseController();
+        this.methodsController = new MethodsController();
     }
     public void initialize() {
         siteTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
@@ -49,20 +51,20 @@ public class EditSiteController {
         siteColumn.setOnEditCommit(event -> {
             Site site = event.getRowValue();
             site.setCity(event.getNewValue());
-            baseController.updateInDatabase(siteService, "updateSite", site);
+            methodsController.updateInDatabase(siteService, "updateSite", site);
         });
     }
 
-    public void onDeleteButtonClick(ActionEvent actionEvent) {
+    public void onDeleteButtonClick() {
         // Récuperation de l'id du site
         int selectedId = siteTableView.getSelectionModel().getSelectedItem().getId();
         // Creation de l'une liste si un employé est detecté avec l'id du site
         List<Employee> employees = employeeService.searchBySite(selectedId);
 
         if (!employees.isEmpty()) {
-            BaseController.errorMessage("Erreur ", "Le site est encore affecté à des utilisateurs");
+            MessagesManager.errorMessage("Erreur ", "Le site est encore affecté à des utilisateurs");
         } else {
-            BaseController.deleteSelectedItem(siteTableView, siteService, "getId", "deleteSite", "Succés", "Erreur");
+            methodsController.deleteSelectedItem(siteTableView, siteService, "getId", "deleteSite", "Succés", "Erreur");
         }
     }
 }

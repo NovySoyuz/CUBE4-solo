@@ -40,4 +40,7 @@ public class EmployeeService {
         return employeeRepository.deleteEmployee(id);
     }
     public Employee updateEmployee(Employee employee) {return employeeRepository.updateEmployee(employee);}
+    public Employee adminConnecion (Employee employee) {
+        return employeeRepository.loginAdmin(employee);
+    }
 }

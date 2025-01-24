@@ -1,14 +1,14 @@
 package com.example.application.controller.admin.service;
 
-import com.example.application.controller.BaseController;
+import com.example.application.controller.HomeController;
 import com.example.application.domain.model.Employee;
 import com.example.application.domain.model.Services;
-import com.example.application.domain.ports.ServicesRepository;
 import com.example.application.infrastructure.EmployeeApiAdapter;
-import com.example.application.infrastructure.HttpApiAdapter;
 import com.example.application.infrastructure.ServicesApiAdapter;
 import com.example.application.services.EmployeeService;
 import com.example.application.services.ServicesService;
+import com.example.application.utils.MessagesManager;
+import com.example.application.utils.MethodsController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -20,7 +20,7 @@ import java.util.List;
 
 public class EditServiceController {
     private final ServicesService servicesService;
-    private final BaseController baseController;
+    private final MethodsController methodsController;
     private final EmployeeService employeeService;
     @FXML
     private TableView<Services> serviceTableView;
@@ -30,7 +30,7 @@ public class EditServiceController {
 
     public EditServiceController() {
         this.servicesService = new ServicesService(new ServicesApiAdapter());
-        this.baseController = new BaseController();
+        this.methodsController = new MethodsController();
         this.employeeService = new EmployeeService(new EmployeeApiAdapter());
     }
 
@@ -53,18 +53,18 @@ public class EditServiceController {
         nameColumn.setOnEditCommit(event -> {
             Services service = event.getRowValue();
             service.setName(event.getNewValue());
-            baseController.updateInDatabase(servicesService, "updateService", service);
+            methodsController.updateInDatabase(servicesService, "updateService", service);
         });
     }
 
-    public void onDeleteButtonClick(ActionEvent actionEvent) {
+    public void onDeleteButtonClick() {
         int selectedId = serviceTableView.getSelectionModel().getSelectedItem().getId();
         List<Employee>  employees = employeeService.searchByService(selectedId);
 
         if (!employees.isEmpty()) {
-            BaseController.errorMessage("Erreur ", "Le site est encore affecté à des utilisateurs");
+            MessagesManager.errorMessage("Erreur ", "Le site est encore affecté à des utilisateurs");
         } else {
-            BaseController.deleteSelectedItem(serviceTableView, servicesService, "getId", "deleteService", "succés", "erreur");
+            methodsController.deleteSelectedItem(serviceTableView, servicesService, "getId", "deleteService", "succés", "erreur");
         }
     }
 }

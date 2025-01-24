@@ -8,6 +8,7 @@ public class Employee {
     private String mail;
     private String firstname;
     private String phone;
+    private int is_admin;
     // On instancie Services et Site car ils sont présent dans l'API
     // Il faut donc créer les 2 classes et les instancier pour que le framework jakeson puisse serialiser le JSON
     private Services services;
@@ -80,4 +81,11 @@ public class Employee {
         this.site = site;
     }
 
+    public int getIs_admin() {
+        return is_admin;
+    }
+
+    public void setIs_admin(int is_admin) {
+        this.is_admin = is_admin;
+    }
 }

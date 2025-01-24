@@ -3,13 +3,15 @@ package com.example.application.controller.admin.employee;
 import com.example.application.services.EmployeeService;
 import com.example.application.services.ServicesService;
 import com.example.application.services.SiteService;
-import com.example.application.controller.BaseController;
+import com.example.application.controller.HomeController;
 import com.example.application.domain.model.Employee;
 import com.example.application.domain.model.Services;
 import com.example.application.domain.model.Site;
 import com.example.application.infrastructure.EmployeeApiAdapter;
 import com.example.application.infrastructure.ServicesApiAdapter;
 import com.example.application.infrastructure.SiteApiAdapter;
+import com.example.application.utils.HomeKeyController;
+import com.example.application.utils.MessagesManager;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -51,8 +53,13 @@ public class CreateEmployeeController {
 
     public void handleCreateButton() {
         if (nameField.getText().isEmpty() || emailField.getText().isEmpty() || firstNameField.getText().isEmpty() || phoneField.getText().isEmpty() || servicesComboBox.getItems() == null || siteComboBox.getItems() == null) {
-            BaseController.errorMessage("Erreur", "Tous les champs sont obligatoires");
-        } else {
+            MessagesManager.errorMessage("Erreur", "Tous les champs sont obligatoires");
+            return;
+        }
+        if (!emailField.getText().contains("@")) {
+            MessagesManager.errorMessage("Erreur", "Erreur format adresse mail");
+            return;
+        }
             Employee employee = new Employee();
             employee.setName(nameField.getText());
             employee.setMail(emailField.getText());
@@ -61,9 +68,12 @@ public class CreateEmployeeController {
             employee.setServices(servicesComboBox.getValue());
             employee.setSite(siteComboBox.getValue());
 
+        try {
             employeeService.createEmployee(employee);
             // Création d'un message
-            BaseController.successMessage("Succès", "L'employé a été créé avec succès !");
+            MessagesManager.successMessage("Succès", "L'employé a été créé avec succès !");
+        } catch (Exception e) {
+            MessagesManager.errorMessage("Erreur", "Une erreur est survenue lors de la création de la commande : " + e.getMessage());
         }
     }
 }

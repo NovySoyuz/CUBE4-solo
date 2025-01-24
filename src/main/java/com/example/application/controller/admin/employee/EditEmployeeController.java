@@ -1,17 +1,18 @@
 package com.example.application.controller.admin.employee;
 
-import com.example.application.controller.BaseController;
+import com.example.application.controller.HomeController;
 import com.example.application.domain.model.Employee;
+import com.example.application.utils.MessagesManager;
+import com.example.application.utils.MethodsController;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.TextFieldTableCell;
 
-public class EditEmployeeController extends BaseController {
-    private final BaseController baseController;
+public class EditEmployeeController extends HomeController {
+    private final MethodsController methodsController;
 
     public EditEmployeeController() {
-        this.baseController = new BaseController();
+        this.methodsController = new MethodsController();
     }
 
     @Override
@@ -28,7 +29,7 @@ public class EditEmployeeController extends BaseController {
             // Mettre à jour la propriété de l'employé avec la nouvelle valeure dde la cellule
             employee.setName(event.getNewValue());
             // Mise à jour du service
-            baseController.updateInDatabase(employeeService, "updateEmployee", employee);
+            methodsController.updateInDatabase(employeeService, "updateEmployee", employee);
         });
 
         firstNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -36,7 +37,7 @@ public class EditEmployeeController extends BaseController {
             Employee employee = event.getRowValue();
             employee.setFirstname(event.getNewValue());
             // Mise à jour du service
-            baseController.updateInDatabase(employeeService, "updateEmployee", employee);
+            methodsController.updateInDatabase(employeeService, "updateEmployee", employee);
         });
 
         phoneColumn.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -44,15 +45,18 @@ public class EditEmployeeController extends BaseController {
             Employee employee = event.getRowValue();
             employee.setPhone(event.getNewValue());
             // Mise à jour du service
-            baseController.updateInDatabase(employeeService, "updateEmployee", employee);
+            methodsController.updateInDatabase(employeeService, "updateEmployee", employee);
         });
 
         mailColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         mailColumn.setOnEditCommit(event -> {
             Employee employee = event.getRowValue();
             employee.setMail(event.getNewValue());
-            // Mise à jour du service
-            baseController.updateInDatabase(employeeService, "updateEmployee", employee);
+            if (!event.getNewValue().contains("@")) {
+                MessagesManager.errorMessage("Erreur", "Erreur format adresse mail");
+                return;
+            }
+            methodsController.updateInDatabase(employeeService, "updateEmployee", employee);
         });
 
         serviceColumn.setCellFactory(ComboBoxTableCell.forTableColumn(
@@ -61,7 +65,7 @@ public class EditEmployeeController extends BaseController {
         serviceColumn.setOnEditCommit(event -> {
             Employee employee = event.getRowValue();
             employee.setServices(event.getNewValue());
-            baseController.updateInDatabase(employeeService, "updateEmployee", employee);
+            methodsController.updateInDatabase(employeeService, "updateEmployee", employee);
         });
 
         siteColumn.setCellFactory(ComboBoxTableCell.forTableColumn(
@@ -70,13 +74,18 @@ public class EditEmployeeController extends BaseController {
         siteColumn.setOnEditCommit(event -> {
             Employee employee = event.getRowValue();
             employee.setSite(event.getNewValue());
-            baseController.updateInDatabase(employeeService, "updateEmployee", employee);
+            methodsController.updateInDatabase(employeeService, "updateEmployee", employee);
         });
 
     }
 
-    public void onDeleteButtonClick(ActionEvent actionEvent) {
-        BaseController.deleteSelectedItem(employeeTableView, employeeService, "getId_employee", "deleteEmployee", "succés", "Erreur");
+    public void onDeleteButtonClick() {
+        try {
+            methodsController.deleteSelectedItem(employeeTableView, employeeService, "getId_employee", "deleteEmployee", "succés", "Erreur");
+            MessagesManager.errorMessage("Erreur", "Erreur lors de la suppression");
+        } catch (Exception e) {
+            return;
+        }
 
     }
 }

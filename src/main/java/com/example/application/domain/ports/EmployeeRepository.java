@@ -17,5 +17,6 @@ public interface EmployeeRepository {
     List<Employee> getAllEmployees();
     boolean deleteEmployee (int id);
     Employee updateEmployee (Employee employee);
+    Employee loginAdmin (Employee employee);
 
 }

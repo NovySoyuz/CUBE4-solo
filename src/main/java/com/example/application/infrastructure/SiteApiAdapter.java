@@ -2,6 +2,7 @@ package com.example.application.infrastructure;
 
 import com.example.application.domain.model.Site;
 import com.example.application.domain.ports.SiteRepository;
+import com.example.application.utils.HttpApiAdapter;
 
 import java.util.List;
 

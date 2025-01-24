@@ -2,6 +2,8 @@ package com.example.application.infrastructure;
 
 import com.example.application.domain.model.Employee;
 import com.example.application.domain.ports.EmployeeRepository;
+import com.example.application.utils.HttpApiAdapter;
+
 import java.util.List;
 
 public class EmployeeApiAdapter implements EmployeeRepository {
@@ -47,6 +49,11 @@ public class EmployeeApiAdapter implements EmployeeRepository {
     @Override
     public Employee updateEmployee(Employee employee) {
         return httpApiAdapter.sendDataRequest(apiURL+ employee.getId_employee(), "PUT", employee, Employee.class);
+    }
+
+    @Override
+    public Employee loginAdmin(Employee employee) {
+        return httpApiAdapter.sendDataRequest(apiURL + "admin", "POST", employee, Employee.class);
     }
 
 

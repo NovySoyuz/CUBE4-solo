@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <VBox xmlns:fx="http://javafx.com/fxml" alignment="CENTER" spacing="20.0"
-        fx:controller="com.example.application.controller.HomeController"
+        fx:controller="com.example.application.utils.HomeKeyController"
       onKeyPressed="#handleKeyPressed" onKeyReleased="#handleKeyReleased">
     <!-- Titre de la recherche -->
     <Label text="Recherche d'Employés" style="-fx-font-size: 20px;"/>
