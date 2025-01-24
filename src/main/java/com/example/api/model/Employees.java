@@ -15,15 +15,16 @@ public class Employees {
     private String firstname;
     private String phone;
     private String mail;
+    private int is_admin;
 
     // Relation plusieurs à 1
     // Permet de faire des suppression en cascade sinon erreur
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_service") // Indique la colonne de clé étrangere
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})  // Ignorer les champs proxy
     private Services services; // Entité cible
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_site")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Site site;

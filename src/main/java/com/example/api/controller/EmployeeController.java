@@ -1,5 +1,6 @@
 package com.example.api.controller;
 
+import com.example.api.dto.AdminConnectionDTO;
 import com.example.api.model.Employees;
 import com.example.api.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,36 +27,14 @@ public class EmployeeController {
     @PostMapping // Methode POST
     // @RequestBody indique que le corp de la requete contient un objet JSON/XML
     // Qui doit etre converti en instance de Employees
-    public ResponseEntity<Employees> createEmployee(@RequestBody Employees employees) {
-        Employees createdEmployee = employeeService.createEmployee(
+    public Employees createEmployee(@RequestBody Employees employees) {
 
-                employees.getName(),
-                employees.getFirstname(),
-                employees.getPhone(),
-                employees.getMail(),
-                // Il faut aller chercher dans la classe Service en passant par Employees
-                // Car clé étrangére
-                employees.getServices().getId(),
-                employees.getSite().getId()
-
-        );
-        // renvoie un objet ResponsEntity avec http 200
-        // Représente l'ensemble de la réponse http (status code, header, body)
-        return ResponseEntity.ok(createdEmployee);
+        return employeeService.createEmployee(employees);
     }
     // @PathVariable extrait la variable de chemin ici id
     @PutMapping("{id}")
-    public ResponseEntity<Employees> updateEmployee (@PathVariable Integer id, @RequestBody Employees employees) {
-        Employees update = employeeService.updateEmployee(
-                id,
-                employees.getName(),
-                employees.getFirstname(),
-                employees.getPhone(),
-                employees.getMail(),
-                employees.getServices().getId(),
-                employees.getSite().getId()
-        );
-        return ResponseEntity.ok(update);
+    public Employees updateEmployee (@PathVariable Integer id, @RequestBody Employees employees) {
+        return employeeService.updateEmployee(employees);
     }
 
     // Récupératio de l'ensemble des employes
@@ -118,6 +97,15 @@ public class EmployeeController {
         employeeService.deleteEmployee(id);
         // Reponse 204 pour indiquer la suppression avec succés
         return ResponseEntity.ok(message);
+    }
+    // Consommation du DTO en entrée et en sortie
+    @PostMapping("admin")
+    public ResponseEntity<AdminConnectionDTO> adminLogin(@RequestBody AdminConnectionDTO adminConnection) {
+        AdminConnectionDTO admins = employeeService.adminLogin(adminConnection.getName(), adminConnection.getFirstname());
+        if (admins == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        return ResponseEntity.ok(admins);
     }
 }
 
