@@ -28,7 +28,7 @@ public class ServicesControllerTest {
     // Permet d'éxécuter les requettes HTTP
     @Autowired
     private MockMvc mockMvc;
-    // Simulation (mock) une dépendance injectée, on remplace la dépendance réelle par notre mock
+    // Simulation (mock) une dépendance injectée, on remplace la dépendance réelle par notre mock, utile pour spring
     @MockBean
     private ServicesService servicesService;
     @Autowired
