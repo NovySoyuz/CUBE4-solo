@@ -27,7 +27,6 @@ public class EditServiceController {
     private TableColumn<Services, Integer> idColumn;
     private TableColumn<Services, String> nameColumn;
 
-
     public EditServiceController() {
         this.servicesService = new ServicesService(new ServicesApiAdapter());
         this.methodsController = new MethodsController();

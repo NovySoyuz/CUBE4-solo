@@ -10,7 +10,13 @@ public class EmployeeApiAdapter implements EmployeeRepository {
     // Chemin de l'API
     private final HttpApiAdapter httpApiAdapter;
     private final String apiURL = "http://localhost:8080/api/employees/";
+    // Ajout d'un constructeur pour utiliser dans les classes de tests
+    // Permet l'injection de httpApiAdapter
+    public EmployeeApiAdapter(HttpApiAdapter httpApiAdapter) {
+        this.httpApiAdapter = httpApiAdapter;
+    }
 
+    // Lors de la création d'un ServiceApiAdapter il utilise toujours une instance de httpApiAdapter
     public EmployeeApiAdapter () {
         this.httpApiAdapter = new HttpApiAdapter();
     }

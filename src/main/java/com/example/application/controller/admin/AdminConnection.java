@@ -1,7 +1,6 @@
 package com.example.application.controller.admin;
 
 import com.example.application.domain.model.Employee;
-import com.example.application.domain.ports.EmployeeRepository;
 import com.example.application.infrastructure.EmployeeApiAdapter;
 import com.example.application.services.EmployeeService;
 import com.example.application.utils.MessagesManager;
@@ -9,8 +8,6 @@ import com.example.application.utils.NavigationManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
-
-import java.security.spec.ECField;
 
 public class AdminConnection {
     private final EmployeeService employeeService;
@@ -33,7 +30,7 @@ public class AdminConnection {
         employee.setName(name.getText());
 
         try {
-            employeeService.adminConnecion(employee);
+            employeeService.adminConnection(employee);
         } catch (Exception e) {
             MessagesManager.errorMessage("Erreur de connexion", "Mot de passe ou username incorrect ou vous n'avez pas les droits");
             return;
