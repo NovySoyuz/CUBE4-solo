@@ -13,15 +13,14 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 import java.lang.reflect.Array;
 import java.util.Collections;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(EmployeeController.class)
 class EmployeeControllerTest {
@@ -104,5 +103,74 @@ class EmployeeControllerTest {
                 .andExpect(jsonPath("$.name").value("testName"))
                 .andExpect(jsonPath("$.firstname").value("testFirstname"))
                 .andExpect(jsonPath("$.is_admin").value(1));
+    }
+
+    @Test
+    void createEmployee() throws Exception {
+        mockEmployees.setId_employee(1);
+        mockEmployees.setName("testName");
+        mockEmployees.setFirstname("testFirstname");
+
+        Mockito.when(employeeService.createEmployee(Mockito.any(Employees.class))).thenReturn(mockEmployees);
+
+        mockMvc.perform(post("/api/employees/")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(mockEmployees)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id_employee").value(1))
+                .andExpect(jsonPath("$.name").value("testName"))
+                .andExpect(jsonPath("$.firstname").value("testFirstname"));
+    }
+
+    @Test
+    void updateEmployee() throws Exception {
+        mockEmployees.setId_employee(1);
+        mockEmployees.setName("updatedName");
+
+        Mockito.when(employeeService.updateEmployee(Mockito.any(Employees.class))).thenReturn(mockEmployees);
+
+        mockMvc.perform(put("/api/employees/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(mockEmployees)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id_employee").value(1))
+                .andExpect(jsonPath("$.name").value("updatedName"));
+    }
+
+    @Test
+    void getAllEmployees() throws Exception {
+        mockEmployees.setId_employee(1);
+        mockEmployees.setName("testName");
+
+        Mockito.when(employeeService.getAllEmployees()).thenReturn(Collections.singletonList(mockEmployees));
+
+        mockMvc.perform(get("/api/employees/")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id_employee").value(1))
+                .andExpect(jsonPath("$[0].name").value("testName"));
+    }
+
+    @Test
+    void getEmployeeById() throws Exception {
+        mockEmployees.setId_employee(1);
+        mockEmployees.setName("testName");
+
+        Mockito.when(employeeService.getEmployeeById(1)).thenReturn(Optional.of(mockEmployees));
+
+        mockMvc.perform(get("/api/employees/1")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id_employee").value(1))
+                .andExpect(jsonPath("$.name").value("testName"));
+    }
+
+    @Test
+    void deleteEmployee() throws Exception {
+        Mockito.doNothing().when(employeeService).deleteEmployee(1);
+
+        mockMvc.perform(delete("/api/employees/1"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("Success suppress"));
     }
 }

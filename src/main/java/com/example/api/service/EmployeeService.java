@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service // Composant de service metier
-
 public class EmployeeService {
     @Autowired // Injecte automatiquement les dépendances dans les attributs (injection de dépendance)
     private EmployeesRepository employeesRepository; // Instance de EmployeeRepository permet l'accés aux données de Employees

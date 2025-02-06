@@ -37,7 +37,7 @@ public class EmployeeController {
         return employeeService.updateEmployee(employees);
     }
 
-    // Récupératio de l'ensemble des employes
+    // Récupération de l'ensemble des employes
     @GetMapping // Methode GET
     public ResponseEntity<Iterable<Employees>> getAllEmployees() {
         Iterable<Employees> employees = employeeService.getAllEmployees();
