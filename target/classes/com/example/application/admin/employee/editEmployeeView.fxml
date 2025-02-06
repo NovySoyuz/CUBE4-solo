@@ -35,7 +35,7 @@
     </HBox>
 
     <!-- Tableau pour afficher les résultats des employés -->
-    <TableView fx:id="employeeTableView" prefHeight="300" prefWidth="400">
+    <TableView fx:id="employeeTableView" prefHeight="500" prefWidth="600">
     </TableView>
     <Button text="Supprimer" onAction="#onDeleteButtonClick" />
 

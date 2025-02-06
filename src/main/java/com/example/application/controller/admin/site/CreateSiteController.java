@@ -18,17 +18,19 @@ public class CreateSiteController {
         this.siteService = new SiteService(new SiteApiAdapter());
     }
 
-
+    // Methode associé au bouton de création
     public void handleCreateButton() {
 
         Site site = new Site();
         site.setCity(nameField.getText());
 
+        // Le champ ne doit pas etre vide
         if (nameField.getText().isEmpty()) {
             MessagesManager.errorMessage("Erreur", "Tous les champs sont obligatoires");
             return;
         }
 
+        // Creation du service
         try {
             siteService.createSite(site);
             MessagesManager.successMessage("Succés", "Le site à été créé avec succés");

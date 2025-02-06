@@ -46,7 +46,7 @@ class EmployeeApiAdapterTest {
 
     @Test
     void testFindByName() {
-        String name = "John";
+        String name = "toto";
         Employee employee1 = new Employee();
         employee1.setId_employee(1);
         employee1.setName(name);

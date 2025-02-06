@@ -69,8 +69,6 @@ public class MethodsController {
                     e.printStackTrace();
                 }
             }
-        } else {
-            return;
         }
     }
 }

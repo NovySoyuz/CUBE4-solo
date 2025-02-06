@@ -61,6 +61,4 @@ public class EmployeeApiAdapter implements EmployeeRepository {
     public Employee loginAdmin(Employee employee) {
         return httpApiAdapter.sendDataRequest(apiURL + "admin", "POST", employee, Employee.class);
     }
-
-
 }

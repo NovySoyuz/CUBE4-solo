@@ -2,14 +2,18 @@ package com.example.application.controller.admin.employee;
 
 import com.example.application.controller.HomeController;
 import com.example.application.domain.model.Employee;
+import com.example.application.domain.model.Services;
 import com.example.application.utils.MessagesManager;
 import com.example.application.utils.MethodsController;
 import javafx.collections.FXCollections;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.ComboBoxTableCell;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 
 public class EditEmployeeController extends HomeController {
     private final MethodsController methodsController;
+    private TableColumn<Employee, Integer> idColumn;
 
     public EditEmployeeController() {
         this.methodsController = new MethodsController();
@@ -22,6 +26,11 @@ public class EditEmployeeController extends HomeController {
         employeeTableView.setEditable(true);
         // Permet de double clicker sur la cellule et de l'éditer
         nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+
+        idColumn = new TableColumn<>("ID");
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("id_employee"));
+        // ajout de la colonne supplementaire id
+        employeeTableView.getColumns().addAll(idColumn);
         // Gestionnaire d'evenement lors d'une modification est validée
         nameColumn.setOnEditCommit(event -> {
             // Récuperation de l'objet employé associé à la ligne en cours
@@ -82,7 +91,7 @@ public class EditEmployeeController extends HomeController {
     public void onDeleteButtonClick() {
         try {
             methodsController.deleteSelectedItem(employeeTableView, employeeService, "getId_employee", "deleteEmployee", "succés", "Erreur");
-            MessagesManager.errorMessage("Erreur", "Erreur lors de la suppression");
+            MessagesManager.successMessage("Success", "Succés de la suppression");
         } catch (Exception e) {
             return;
         }

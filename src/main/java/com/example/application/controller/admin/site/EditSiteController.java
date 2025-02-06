@@ -33,9 +33,12 @@ public class EditSiteController {
         this.methodsController = new MethodsController();
     }
     public void initialize() {
+        // Sizer correctement la le tableau
         siteTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
+        // Rendre modifiable les lignes
         siteTableView.setEditable(true);
 
+        // Creation des tables et affection des valeurs
         idColumn = new TableColumn<>("Id");
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
 
@@ -44,13 +47,17 @@ public class EditSiteController {
 
         siteTableView.getColumns().addAll(idColumn, siteColumn);
 
+        // Récuperation de l'ensemble des services
         List<Site> sites = siteService.getAllSite();
+        // Affichage dans la tableView des services
         siteTableView.getItems().setAll(sites);
 
+        // Modification de la ligne
         siteColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         siteColumn.setOnEditCommit(event -> {
             Site site = event.getRowValue();
             site.setCity(event.getNewValue());
+            // Appel de la methode pour update la valeur dans le BDD (API)
             methodsController.updateInDatabase(siteService, "updateSite", site);
         });
     }

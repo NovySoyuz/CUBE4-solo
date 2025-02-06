@@ -20,6 +20,7 @@ public class AdminConnection {
         this.employeeService = new EmployeeService(new EmployeeApiAdapter());
     }
 
+    // Connexion admin
     public void connection(ActionEvent actionEvent) {
         if (name.getText().isEmpty() || firstname.getText().isEmpty()) {
             MessagesManager.errorMessage("Erreur", "Tous les champs sont à completer");
@@ -29,6 +30,7 @@ public class AdminConnection {
         employee.setFirstname(firstname.getText());
         employee.setName(name.getText());
 
+        // appel de la connexiona admin
         try {
             employeeService.adminConnection(employee);
         } catch (Exception e) {

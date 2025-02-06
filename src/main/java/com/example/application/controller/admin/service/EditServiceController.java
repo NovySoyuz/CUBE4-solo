@@ -34,34 +34,43 @@ public class EditServiceController {
     }
 
     public void initialize() {
+        // Sizer correctement la le tableau
         serviceTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        // Rendre modifiable les lignes
         serviceTableView.setEditable(true);
 
+        // Creation des tables et affection des valeurs
         idColumn = new TableColumn<>("ID");
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
 
-        nameColumn = new TableColumn<>("Name");
+        nameColumn = new TableColumn<>("Service");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
         serviceTableView.getColumns().addAll(idColumn, nameColumn);
-
+        // Récuperation de l'ensemble des services
         List<Services> services = servicesService.getAllServices();
+        // Affichage dans la tableView des services
         serviceTableView.getItems().setAll(services);
 
+        // Modification de la ligne
         nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         nameColumn.setOnEditCommit(event -> {
             Services service = event.getRowValue();
             service.setName(event.getNewValue());
+            // Appel de la methode pour update la valeur dans le BDD (API)
             methodsController.updateInDatabase(servicesService, "updateService", service);
         });
     }
 
     public void onDeleteButtonClick() {
+        // Récuperation de l'id de la cellule clické
         int selectedId = serviceTableView.getSelectionModel().getSelectedItem().getId();
+        // Appel de la methode pour savoir si un employé est affecté à un service
         List<Employee>  employees = employeeService.searchByService(selectedId);
 
+        // Si employé detecté
         if (!employees.isEmpty()) {
-            MessagesManager.errorMessage("Erreur ", "Le site est encore affecté à des utilisateurs");
+            MessagesManager.errorMessage("Erreur ", "Le service est encore affecté à des utilisateurs");
         } else {
             methodsController.deleteSelectedItem(serviceTableView, servicesService, "getId", "deleteService", "succés", "erreur");
         }
